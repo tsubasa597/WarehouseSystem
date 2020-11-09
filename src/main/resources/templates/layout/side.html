@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div class="layui-side layui-bg-black" th:fragment="sider">
+        <div class="layui-side-scroll">
+        <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <div th:each="test : ${tests}">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" th:text="${test.menuName}"></a>
+                    <dl class="layui-nav-child" th:each="children : ${test.menuChildren}">
+                        <dd><a href="javascript:;" th:text="${children[0]}" class="layTabPlus" th:tab_url="${children[1]}"></a></dd>
+                    </dl>
+                </li>
+            </div>
+        </ul>
+        </div>
+    </div>
+</body>
