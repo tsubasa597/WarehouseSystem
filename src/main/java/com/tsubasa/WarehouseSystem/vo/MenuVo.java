@@ -1,4 +1,4 @@
-package com.tsubasa.homework.vo;
+package com.tsubasa.WarehouseSystem.vo;
 
 import lombok.Data;
 

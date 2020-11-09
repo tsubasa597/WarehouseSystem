@@ -1,8 +1,8 @@
-package com.tsubasa.homework.service.page;
+package com.tsubasa.WarehouseSystem.service.page;
 
 import java.util.List;
 
-import com.tsubasa.homework.vo.MenuVo;
+import com.tsubasa.WarehouseSystem.vo.MenuVo;
 
 public interface UserPageService {
     public List<MenuVo> addMenu();

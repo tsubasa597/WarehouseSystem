@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tsubasa</groupId>
-	<artifactId>homework</artifactId>
+	<artifactId>WarehouseSystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>homework</name>
+	<name>WarehouseSystem</name>
 	<description>Spring Boot</description>
 
 	<properties>

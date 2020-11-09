@@ -1,6 +1,6 @@
-package com.tsubasa.homework.controller.page;
+package com.tsubasa.WarehouseSystem.controller.page;
 
-import com.tsubasa.homework.service.page.UserPageService;
+import com.tsubasa.WarehouseSystem.service.page.UserPageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

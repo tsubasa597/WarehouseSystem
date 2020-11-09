@@ -1,4 +1,4 @@
-package com.tsubasa.homework.consts;
+package com.tsubasa.WarehouseSystem.consts;
 
 import org.springframework.stereotype.Component;
 

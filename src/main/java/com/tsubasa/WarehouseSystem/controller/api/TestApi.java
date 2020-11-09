@@ -1,4 +1,4 @@
-package com.tsubasa.homework.controller.api;
+package com.tsubasa.WarehouseSystem.controller.api;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

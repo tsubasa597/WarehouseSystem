@@ -1,11 +1,11 @@
-package com.tsubasa.homework.service.page.Imple;
+package com.tsubasa.WarehouseSystem.service.page.Imple;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import com.tsubasa.homework.consts.MenuConsts;
-import com.tsubasa.homework.service.page.UserPageService;
-import com.tsubasa.homework.vo.MenuVo;
+import com.tsubasa.WarehouseSystem.consts.MenuConsts;
+import com.tsubasa.WarehouseSystem.service.page.UserPageService;
+import com.tsubasa.WarehouseSystem.vo.MenuVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
