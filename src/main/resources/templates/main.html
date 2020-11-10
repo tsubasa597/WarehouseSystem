@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title>仓库管理系统</title>
-        <link rel="stylesheet" th:href="@{/css/layui.css}">
-    </head>
+    <head th:replace="../templates/layout/head :: head"></head>
     <body class="layui-layout-body">
         <div class="layui-layout layui-layout-admin" >
             <div th:replace="../templates/layout/header :: header"></div>

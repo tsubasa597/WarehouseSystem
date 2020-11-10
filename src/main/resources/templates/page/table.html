@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/layui.css}">
+
+<body>
+    <table lay-filter="parse-table-demo">
+        <thead>
+          <tr>
+            <th lay-data="{field:'username', width:200}">昵称</th>
+            <th lay-data="{field:'joinTime', width:150}">加入时间</th>
+            <th lay-data="{field:'sign', minWidth: 180}">签名</th>
+          </tr> 
+        </thead>
+        <tbody>
+          <tr>
+            <td>贤心1</td>
+            <td>2016-11-28</td>
+            <td>人生就像是一场修行 A</td>
+          </tr>
+          <tr>
+            <td>贤心2</td>
+            <td>2016-11-29</td>
+            <td>人生就像是一场修行 B</td>
+          </tr>
+          <tr>
+            <td>贤心3</td>
+            <td>2016-11-30</td>
+            <td>人生就像是一场修行 C</td>
+          </tr>
+        </tbody>
+      </table>
+      <script th:src="@{/layui.all.js}"></script>
+      <script>
+          var table = layui.table;
+        table.init('parse-table-demo')
+        </script>
