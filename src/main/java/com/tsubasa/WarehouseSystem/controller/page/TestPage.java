@@ -2,7 +2,8 @@ package com.tsubasa.WarehouseSystem.controller.page;
 
 import javax.annotation.Resource;
 
-import com.tsubasa.WarehouseSystem.service.PageMenuService;
+import com.tsubasa.WarehouseSystem.service.TableDataService;
+import com.tsubasa.WarehouseSystem.util.UserMenu;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,19 +11,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class TestPage {
+
     @Resource
-    private PageMenuService userPageService;
+    private TableDataService tableDataService;
 
     @RequestMapping(value = "/user")
     public String test(Model model) {
         /**
-         * TODO : 修改 Tests
+         * TODO : 修改 Tests, side.html
          */
-        model.addAttribute("tests", userPageService.adminMenu());
+        model.addAttribute("tests", UserMenu.adminMenu());
+        
         return "/main";
     }
-    @RequestMapping(value = "/page/table")
-    public String hello() {
-        return "/page/table";
+    @RequestMapping(value = "/orderIn")
+    public String hello(Model model) {
+        model.addAttribute("datas", tableDataService.putInOrder());
+        return "page/table";
     }
 }

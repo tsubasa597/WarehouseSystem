@@ -12,9 +12,10 @@ import lombok.Data;
 public class Order {
     @TableId
     private int orderId;
-    private String orderName;
-    private int orderNum;
+    private String goodsName;
+    private int goodsNum;
     private Date orderStartDate;
     private Date orderEndDate;
     private Boolean isOrder;
+    private int orderType;
 }
