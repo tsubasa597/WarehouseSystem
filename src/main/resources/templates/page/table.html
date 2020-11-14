@@ -3,27 +3,7 @@
 <link rel="stylesheet" th:href="@{/css/layui.css}">
 
 <body>
-    <table lay-filter="parse-table-demo" th:each="data : ${datas}">
-        <thead>
-          <tr>
-            <th lay-data="{type:'checkbox', fixed:'left'}"></th>
-            <th lay-data="{field:'username', width:200}">昵称</th>
-            <th lay-data="{field:'joinTime', width:200}">加入时间</th>
-            <th lay-data="{field:'sign', minWidth: 180}">签名</th>
-            <th lay-data="{field:'test', minWidth: 180}">签名</th>
-            <th lay-data="{fixed: 'right', width:300, align:'center', toolbar: '#barDemo'}">操作</th>
-          </tr> 
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-            <td th:text="${data.goodsName}"></td>
-            <td th:text="${data.goodsNum}"></td>
-            <td th:text="${data.isOrder}"></td>
-            <td th:text="${data.OrderType}"></td>
-          </tr>
-        </tbody>
-      </table>
+    <table lay-filter="table" id="tableData"></table>
 
       <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
@@ -31,17 +11,48 @@
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
       </script>
 
+      <script type="text/html" id="OrderTpl">
+        {{#  if(d.isOrder === 1){ }}
+            <span style="color: #F581B1;">{{ "已处理" }}</span>
+        {{#  } else { }}
+            <span style="color: #F581B1;">{{ "未处理" }}</span>
+        {{#  } }}
+      </script>
+
+      <script type="text/html" id="OrderTypeTpl">
+        {{#  if(d.orderType === 0){ }}
+            <span>{{ "入库订单" }}</span>
+        {{#  } else if(d.orderType === 1) { }}
+            <span>{{ "出库订单" }}</span>
+        {{#  } else if(d.orderType === 2) { }}
+            <span>{{ "退货订单" }}</span>
+        {{# } }}
+      </script>
+      
+
+
       <script th:src="@{/layui.all.js}"></script>
       <script>
         var table = layui.table;
-        table.init('parse-table-demo', {id: 'allAtt',limit: 1, page: {count: 3, limit: 2, layout: ['prev', 'page', 'next']}, groups: 5})
-        table.on('tool(parse-table-demo)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        table.render({
+            elem: '#tableData'
+            ,url: '/api/table' //数据接口
+            ,page: true //开启分页
+            ,cols: [ [ //表头
+            {field: 'goodsName', align:'center', title: '商品名称'}
+            ,{field: 'goodsNum', align:'center', title: '商品数量'}
+            ,{field: 'isOrder', templet: '#OrderTpl', align:'center', title: '是否处理'}
+            ,{field: 'orderType', templet: '#OrderTypeTpl', align:'center', title: '订单类型'},
+            {fixed: 'right', title: '操作', align:'center', toolbar: '#barDemo'}
+            ] ]
+        });
+        table.on('tool(table)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
             var Event = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (Event == 'del') {
                 layer.confirm('真的删除行么', function(index){
-                obj.del();
-                layer.close(index);
+                    obj.del();
+                    layer.close(index);
                 });
             }
         });      

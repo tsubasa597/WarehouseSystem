@@ -13,11 +13,11 @@ public abstract class BeanUtil {
         return target;
     }
 
-    public static <T> List<T> copyList(List sources, Class<T> clazz) {
+    public static <T> List<T> copyList(List<?> sources, Class<T> clazz) {
         return copyList(sources, clazz, null);
     }
 
-    public static <T> List<T> copyList(List sources, Class<T> clazz, Callback<T> callback) {
+    public static <T> List<T> copyList(List<?> sources, Class<T> clazz, Callback<T> callback) {
         List<T> targetList = new ArrayList<>();
         if (sources != null) {
             try {

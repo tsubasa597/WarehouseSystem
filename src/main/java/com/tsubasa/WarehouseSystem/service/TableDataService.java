@@ -1,9 +1,8 @@
 package com.tsubasa.WarehouseSystem.service;
 
-import java.util.List;
-
 import com.tsubasa.WarehouseSystem.controller.vo.TableVo;
+import com.tsubasa.WarehouseSystem.util.Result;
 
 public interface TableDataService {
-    public List<TableVo> putInOrder();
+    public Result<TableVo> putInOrder();
 }

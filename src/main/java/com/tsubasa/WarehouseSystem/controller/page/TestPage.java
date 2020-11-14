@@ -24,9 +24,8 @@ public class TestPage {
         
         return "/main";
     }
-    @RequestMapping(value = "/orderIn")
-    public String hello(Model model) {
-        model.addAttribute("datas", tableDataService.putInOrder());
+    @RequestMapping(value = "/orderManger")
+    public String hello() {
         return "page/table";
     }
 }
