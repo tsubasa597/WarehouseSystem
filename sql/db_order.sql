@@ -5,5 +5,6 @@ create table if not exists db_order (
     order_start_date date not null,
     order_end_date date,
     is_order tinyint unsigned,
-    order_type tinyint unsigned
-)
+    order_type tinyint unsigned,
+    order_describe text
+);

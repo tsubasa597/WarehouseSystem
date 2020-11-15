@@ -5,21 +5,21 @@
 <body>
     <table lay-filter="table" id="tableData"></table>
 
-      <script type="text/html" id="barDemo">
+    <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-      </script>
+    </script>
 
-      <script type="text/html" id="OrderTpl">
+    <script type="text/html" id="OrderTpl">
         {{#  if(d.isOrder === 1){ }}
             <span style="color: #F581B1;">{{ "已处理" }}</span>
         {{#  } else { }}
             <span style="color: #F581B1;">{{ "未处理" }}</span>
         {{#  } }}
-      </script>
+    </script>
 
-      <script type="text/html" id="OrderTypeTpl">
+    <script type="text/html" id="OrderTypeTpl">
         {{#  if(d.orderType === 0){ }}
             <span>{{ "入库订单" }}</span>
         {{#  } else if(d.orderType === 1) { }}
@@ -27,12 +27,12 @@
         {{#  } else if(d.orderType === 2) { }}
             <span>{{ "退货订单" }}</span>
         {{# } }}
-      </script>
+    </script>
       
 
 
-      <script th:src="@{/layui.all.js}"></script>
-      <script>
+    <script th:src="@{/layui.all.js}"></script>
+    <script>
         var table = layui.table;
         table.render({
             elem: '#tableData'
@@ -56,4 +56,5 @@
                 });
             }
         });      
-      </script>
+    </script>
+</body>

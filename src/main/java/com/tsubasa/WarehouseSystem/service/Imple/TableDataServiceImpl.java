@@ -7,21 +7,23 @@ import javax.annotation.Resource;
 import com.tsubasa.WarehouseSystem.controller.vo.TableVo;
 import com.tsubasa.WarehouseSystem.dao.OrderDao;
 import com.tsubasa.WarehouseSystem.entity.Order;
-import com.tsubasa.WarehouseSystem.service.TableDataService;
+import com.tsubasa.WarehouseSystem.service.TableVoService;
 import com.tsubasa.WarehouseSystem.util.BeanUtil;
 import com.tsubasa.WarehouseSystem.util.Result;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * 展示在 Table 里的数据
+ */
 @Service
-public class TableDataServiceImpl implements TableDataService {
+public class TableDataServiceImpl implements TableVoService {
     @Resource
     private OrderDao orderDao;
 
     @Override
     public Result<TableVo> putInOrder() {
         List<Order> order = orderDao.selectList(null);
-        // BeanUtils.copyProperties(order, tableVos);
         List<TableVo> tableVos = BeanUtil.copyList(order, TableVo.class);
         Result<TableVo> result = new Result<>();
         result.setCode(0);
