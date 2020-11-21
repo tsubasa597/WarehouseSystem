@@ -1,3 +1,7 @@
+<!--
+    TODO: change 是否处理, 编辑
+-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" th:href="@{/css/layui.css}">
@@ -5,17 +9,25 @@
 <body>
     <table lay-filter="table" id="tableData"></table>
 
-    <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+    <script type="text/html" id="tableTools">
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
 
+    <script type="text/html" id="dataTools">
+        <a class="layui-btn" lay-event="allOrder">全部订单</a>
+        <a class="layui-btn" lay-event="inOrder">入库订单</a>
+        <a class="layui-btn" lay-event="outOrder">出库订单</a>
+        <a class="layui-btn" lay-event="returnOrder">退货订单</a>
+        <a class="layui-btn" lay-event="state">是否处理</a>
+        
+    </script>
+
     <script type="text/html" id="OrderTpl">
         {{#  if(d.isOrder === 1){ }}
-            <span style="color: #F581B1;">{{ "已处理" }}</span>
+            <span>{{ "已处理" }}</span>
         {{#  } else { }}
-            <span style="color: #F581B1;">{{ "未处理" }}</span>
+            <span style="background-color: #ff0000; color: #ffffff">{{ "未处理" }}</span>
         {{#  } }}
     </script>
 
@@ -38,23 +50,74 @@
             elem: '#tableData'
             ,url: '/api/table' //数据接口
             ,page: true //开启分页
+            ,toolbar: '#dataTools'
+            ,defaultToolbar: []
             ,cols: [ [ //表头
             {field: 'goodsName', align:'center', title: '商品名称'}
             ,{field: 'goodsNum', align:'center', title: '商品数量'}
             ,{field: 'isOrder', templet: '#OrderTpl', align:'center', title: '是否处理'}
             ,{field: 'orderType', templet: '#OrderTypeTpl', align:'center', title: '订单类型'},
-            {fixed: 'right', title: '操作', align:'center', toolbar: '#barDemo'}
+            {fixed: 'right', title: '操作', align:'center', toolbar: '#tableTools'}
             ] ]
         });
-        table.on('tool(table)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        table.on('tool(table)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
             var Event = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (Event == 'del') {
-                layer.confirm('真的删除行么', function(index){
+                layer.confirm('真的删除行么', function(index) {
                     obj.del();
                     layer.close(index);
                 });
+            } else if (Event == 'edit') {
+
             }
-        });      
+        });
+        layui.form.on('switch(switch)', function(data){
+            if (this.checked == true) {
+                table.reload('tableData', {
+                        url: 'api/table/state',
+                        where: {"state": 1}
+                });
+            } else {
+                console.log("false")
+            }
+            // layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+        table.on('toolbar(table)', function(obj) {
+            var data = obj.data;
+            var Event = obj.event;
+            switch (Event) {
+                case 'allOrder': 
+                    table.reload('tableData', {
+                        url: 'api/table/',
+                        where: {}
+                    });
+                    break;
+                case 'inOrder':
+                    table.reload('tableData', {
+                        url: 'api/table/type',
+                        where: {"type": 0}
+                    });
+                    break;
+                case 'outOrder':
+                    table.reload('tableData', {
+                        url: 'api/table/type',
+                        where: {"type": 1}
+                    });
+                    break;
+                case 'returnOrder':
+                    table.reload('tableData', {
+                        url: 'api/table/type',
+                        where: {"type": 2}
+                    });
+                    break;
+                case 'state':
+                    table.reload('tableData', {
+                        url: 'api/table/state',
+                        where: {"state": 1}
+                    });
+                    break;
+            }
+        })     
     </script>
 </body>

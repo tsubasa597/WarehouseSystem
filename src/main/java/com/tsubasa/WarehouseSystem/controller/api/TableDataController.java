@@ -16,14 +16,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class TableDataController {
     /**
-     * TODO: 添加过滤和搜索功能
+     * TODO: 添加搜索功能
      */
     @Resource
     private TableVoService tableDataService;
 
     @RequestMapping(value = "/table", method = RequestMethod.GET)
-    public Result<TableVo> table() {
+    public Result<TableVo> tableData() {
         return tableDataService.putInOrder();
+    }
+
+    @RequestMapping(value = "/table/type", method = RequestMethod.GET)
+    public Result<TableVo> tableType(int type) {
+        return tableDataService.putInOrderByType(type);
+    }
+    
+    @RequestMapping(value = "/table/state", method = RequestMethod.GET)
+    public Result<TableVo> tableState(int state) {
+        return tableDataService.putInOrderByState(state);
     }
 
     @RequestMapping(value = "/newOrder", method = RequestMethod.POST)

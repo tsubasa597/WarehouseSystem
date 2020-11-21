@@ -31,4 +31,26 @@ public class TableDataServiceImpl implements TableVoService {
         result.setData(tableVos);
         return result;
     }
+
+    @Override
+    public Result<TableVo> putInOrderByType(int orderType) {
+        List<Order> order = orderDao.selectByType(orderType);
+        List<TableVo> tableVos = BeanUtil.copyList(order, TableVo.class);
+        Result<TableVo> result = new Result<>();
+        result.setCode(0);
+        result.setMsg("");
+        result.setData(tableVos);
+        return result;
+    }
+
+    @Override
+    public Result<TableVo> putInOrderByState(int orderState) {
+        List<Order> order = orderDao.selectByIsOrder(orderState);
+        List<TableVo> tableVos = BeanUtil.copyList(order, TableVo.class);
+        Result<TableVo> result = new Result<>();
+        result.setCode(0);
+        result.setMsg("");
+        result.setData(tableVos);
+        return result;
+    }
 }
