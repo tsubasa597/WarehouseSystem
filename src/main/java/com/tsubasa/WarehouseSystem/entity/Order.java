@@ -1,7 +1,5 @@
 package com.tsubasa.WarehouseSystem.entity;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -14,8 +12,9 @@ public class Order {
     private int orderId;
     private String goodsName;
     private int goodsNum;
-    private Date orderStartDate;
-    private Date orderEndDate;
+    private String orderStartDate;
+    private String orderEndDate;
     private int isOrder;
     private int orderType;
+    private String orderDescribe;
 }

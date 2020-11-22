@@ -2,7 +2,7 @@ package com.tsubasa.WarehouseSystem.controller.page;
 
 import javax.annotation.Resource;
 
-import com.tsubasa.WarehouseSystem.service.TableVoService;
+import com.tsubasa.WarehouseSystem.service.OrderService;
 import com.tsubasa.WarehouseSystem.util.UserMenu;
 
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TestPage {
 
     @Resource
-    private TableVoService tableDataService;
+    private OrderService tableDataService;
 
     @RequestMapping(value = "/user")
     public String test(Model model) {

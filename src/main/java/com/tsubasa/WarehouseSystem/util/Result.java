@@ -11,5 +11,12 @@ public class Result<T> implements Serializable {
     private List<T> data;
     private int code;
     private String msg;
-    private int count;
+    private long count;
+
+    public Result(List<T> data, int code, String msg, long count) {
+        this.data = data;
+        this.code = code;
+        this.msg = msg;
+        this.count = count;
+    }
 }

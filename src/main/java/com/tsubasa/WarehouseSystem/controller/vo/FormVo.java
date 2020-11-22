@@ -12,4 +12,5 @@ public class FormVo implements Serializable {
     private String goodsName;
     private int goodsNum;
     private int orderType;
+    private String orderStartDate;
 }

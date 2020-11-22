@@ -1,12 +1,16 @@
-<!--
-    TODO: change 是否处理, 编辑
--->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" th:href="@{/css/layui.css}">
 
 <body>
+    <div class="search">
+        订单名称：
+        <div class="layui-inline">
+          <input class="layui-input" name="id" id="searchData" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="search">搜索</button>
+    </div>
+
     <table lay-filter="table" id="tableData"></table>
 
     <script type="text/html" id="tableTools">
@@ -19,7 +23,7 @@
         <a class="layui-btn" lay-event="inOrder">入库订单</a>
         <a class="layui-btn" lay-event="outOrder">出库订单</a>
         <a class="layui-btn" lay-event="returnOrder">退货订单</a>
-        <a class="layui-btn" lay-event="state">是否处理</a>
+        <a class="layui-btn" lay-event="state">未处理</a>
         
     </script>
 
@@ -48,8 +52,7 @@
         var table = layui.table;
         table.render({
             elem: '#tableData'
-            ,url: '/api/table' //数据接口
-            ,page: true //开启分页
+            ,url: '/api/order' //数据接口
             ,toolbar: '#dataTools'
             ,defaultToolbar: []
             ,cols: [ [ //表头
@@ -59,7 +62,9 @@
             ,{field: 'orderType', templet: '#OrderTypeTpl', align:'center', title: '订单类型'},
             {fixed: 'right', title: '操作', align:'center', toolbar: '#tableTools'}
             ] ]
+            ,page: true
         });
+        
         table.on('tool(table)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data; //获得当前行数据
             var Event = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
@@ -75,7 +80,7 @@
         layui.form.on('switch(switch)', function(data){
             if (this.checked == true) {
                 table.reload('tableData', {
-                        url: 'api/table/state',
+                        url: 'api/order/state',
                         where: {"state": 1}
                 });
             } else {
@@ -89,35 +94,41 @@
             switch (Event) {
                 case 'allOrder': 
                     table.reload('tableData', {
-                        url: 'api/table/',
+                        url: 'api/order/',
                         where: {}
                     });
                     break;
                 case 'inOrder':
                     table.reload('tableData', {
-                        url: 'api/table/type',
+                        url: 'api/order/type',
                         where: {"type": 0}
                     });
                     break;
                 case 'outOrder':
                     table.reload('tableData', {
-                        url: 'api/table/type',
+                        url: 'api/order/type',
                         where: {"type": 1}
                     });
                     break;
                 case 'returnOrder':
                     table.reload('tableData', {
-                        url: 'api/table/type',
+                        url: 'api/order/type',
                         where: {"type": 2}
                     });
                     break;
                 case 'state':
                     table.reload('tableData', {
-                        url: 'api/table/state',
-                        where: {"state": 1}
+                        url: 'api/order/state',
+                        where: {"state": 0}
                     });
                     break;
             }
-        })     
+        })
+        layui.$('.search .layui-btn').on('click', function(){
+            table.reload('tableData', {
+                url: 'api/order/data',
+                where: {"goodsName": layui.$('#searchData').val()}
+            });
+        });     
     </script>
 </body>
