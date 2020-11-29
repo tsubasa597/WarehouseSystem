@@ -10,12 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class TestPage {
+public class MainPageController {
 
     @Resource
     private OrderService tableDataService;
 
-    @RequestMapping(value = "/user")
+    @RequestMapping(value = "/main")
     public String test(Model model) {
         /**
          * TODO : 修改 Tests, side.html
