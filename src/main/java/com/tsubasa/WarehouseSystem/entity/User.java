@@ -9,7 +9,11 @@ import lombok.Data;
 @TableName(value = "db_users")
 public class User {
     @TableId
-    private String usersName;
-    private String usersPwd;
-    private int usersType; 
+    private int userId;
+    private String userName;
+    private String userPwd;
+    private int userAge;
+    private int userSex;
+    private String userPhone;
+    private int userType; 
 }

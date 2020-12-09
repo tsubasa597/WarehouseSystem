@@ -7,18 +7,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
-public class LoginInterceptor implements HandlerInterceptor {
-    
+public class ManagerApiInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        String requestServletPath = request.getServletPath();
-        if (requestServletPath.startsWith("/") && null == request.getSession().getAttribute("type")) {
-            request.getSession().setAttribute("errorMsg", "请登陆");
-            response.sendRedirect(request.getContextPath() + "/login");
+        if ((int)request.getSession().getAttribute("type") == 1) {
             return false;
         } else {
-            request.getSession().removeAttribute("errorMsg");
             return true;
         }
     }

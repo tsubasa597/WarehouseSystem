@@ -5,15 +5,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
 
-/**
- * TODO : 修改字段
- */
-
 @Data
-@TableName(value = "db_goods")
-public class Goods {
+@TableName("db_supplier")
+public class Supplier {
     @TableId
-    private int goodsId;
-    private String goodsName;
-    private int goodsNum;
+    private int supplierId;
+    private String supplierName;
+    private String supplierPhone;
 }

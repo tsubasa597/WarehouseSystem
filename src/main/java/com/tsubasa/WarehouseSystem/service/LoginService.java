@@ -2,6 +2,8 @@ package com.tsubasa.WarehouseSystem.service;
 
 import java.util.Map;
 
+import com.tsubasa.WarehouseSystem.entity.User;
+
 public interface LoginService {
-    public boolean login(Map<String, String> info);
+    public User login(Map<String, String> info);
 }

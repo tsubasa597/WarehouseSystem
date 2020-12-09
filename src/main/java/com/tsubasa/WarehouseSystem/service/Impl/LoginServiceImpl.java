@@ -1,4 +1,4 @@
-package com.tsubasa.WarehouseSystem.service.Imple;
+package com.tsubasa.WarehouseSystem.service.Impl;
 
 import java.util.Map;
 
@@ -17,12 +17,12 @@ public class LoginServiceImpl implements LoginService {
     private UserDao userDao;
 
     @Override
-    public boolean login(Map<String, String> info) {
+    public User login(Map<String, String> info) {
         User user = userDao.selectOne(new QueryWrapper<User>().allEq(info));
         if (user == null) {
-            return false;
+            return user;
         } else {
-            return true;
+            return user;
         }
     }
 }

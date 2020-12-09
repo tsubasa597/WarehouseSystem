@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.tsubasa.WarehouseSystem.entity.User;
 import com.tsubasa.WarehouseSystem.service.LoginService;
 import com.tsubasa.WarehouseSystem.util.MD5Util;
 
@@ -25,14 +27,25 @@ public class LoginPageController {
     }
     
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPost(@RequestParam String user, @RequestParam String password, HttpSession httpSession) {
+    public String loginPost(@RequestParam String userName, @RequestParam String password, HttpSession httpSession) {
         Map<String, String> info = new HashMap<>();
-        info.put(user, password);
-        if (loginService.login(info)) {
-            httpSession.setAttribute("id", MD5Util.MD5Encode(password, "UTF-8"));
+        info.put("user_name", userName);
+        info.put("user_pwd", MD5Util.MD5Encode(password, "UTF-8"));
+        User user = loginService.login(info);
+        if (user.getUserName() != null) {
+            httpSession.setAttribute("name", user.getUserName());
+            httpSession.setAttribute("type", user.getUserType());
             return "redirect:/main";
         } else {
             return "page/login";
         }
+    }
+
+    @RequestMapping(value = "/main/logout", method = RequestMethod.GET)
+    public String logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("name");
+        request.getSession().removeAttribute("type");
+        request.getSession().removeAttribute("errorMsg");
+        return "redirect:/login";
     }
 }
