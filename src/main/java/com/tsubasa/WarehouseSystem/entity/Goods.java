@@ -16,4 +16,5 @@ public class Goods {
     private int goodsId;
     private String goodsName;
     private int goodsNum;
+    private int goodsPrice;
 }

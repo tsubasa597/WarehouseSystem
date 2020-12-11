@@ -18,9 +18,6 @@ public class OrderManagerMainPageController {
 
     @RequestMapping(value = "")
     public String test(Model model, HttpSession httpSession) {
-        /**
-         * TODO : 修改 Tests, side.html
-         */
         if (httpSession.getAttribute("type").equals(0)) {
             model.addAttribute("tests", UserMenu.adminMenu());
         } else {
