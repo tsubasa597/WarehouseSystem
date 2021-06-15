@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    {{{ template "head" }}}
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin" >
+            {{{ template "header" }}}
+            {{{ template "side" . }}}
+            <div class="layui-body">
+                {{{ template "tab" }}}
+            </div>
+           {{{ template "footer" }}}
+        </div>
+
+        <script>
+            var element = layui.element, $ = layui.jquery;
+            layTabPlus.init({lay_filter: 'tab'});
+        </script>
+    </body>
+</html>

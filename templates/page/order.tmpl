@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/static/css/layui.css">
+
+<body>
+    <div class="search">
+        订单名称：
+        <div class="layui-inline">
+          <input class="layui-input" name="id" id="searchData" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="search">搜索</button>
+    </div>
+
+    <table lay-filter="table" id="tableData"></table>
+
+    <script type="text/html" id="tableTools">
+        {{#  if(d.done === 1){ }}
+            <a class="layui-btn layui-btn-xs" lay-event="done">处理</a>
+        {{#  } }}
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+
+    <script type="text/html" id="tableTools">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+
+    <script type="text/html" id="dataTools">
+        <a class="layui-btn" lay-event="newOrder">新建订单</a>
+    </script>
+
+    <script type="text/html" id="OrderTpl">
+        {{#  if(d.done === 2){ }}
+            <span>{{ "已处理" }}</span>
+        {{#  } else { }}
+            <span style="background-color: #ff0000; color: #ffffff">{{ "未处理" }}</span>
+        {{#  } }}
+    </script>
+
+    <script type="text/html" id="OrderTypeTpl">
+        {{#  if(d.type === 1){ }}
+            <span>{{ "入库订单" }}</span>
+        {{#  } else if(d.type === 2) { }}
+            <span>{{ "出库订单" }}</span>
+        {{#  } else if(d.type === 3) { }}
+            <span>{{ "退货订单" }}</span>
+        {{# } }}
+    </script>
+
+    <script src="/static/layui.all.js"></script>
+    <script>
+        var table = layui.table;
+        table.render({
+            elem: '#tableData'
+            ,url: '/api/v1/order/' //数据接口
+            ,toolbar: '#dataTools'
+            ,defaultToolbar: []
+            ,cols: [ [ //表头
+            {field: 'id', align:'center', title: '商品 ID'}
+            ,{field: 'name', align:'center', title: '商品名称'}
+            ,{field: 'num', align:'center', event: 'setGoodsNum', title: '商品数量'}
+            ,{field: 'done', templet: '#OrderTpl', align:'center', title: '是否处理'}
+            ,{field: 'type', templet: '#OrderTypeTpl', align:'center', title: '订单类型'},
+            {fixed: 'right', title: '操作', align:'center', toolbar: '#tableTools'}
+            ] ]
+            ,page: true
+        });
+        
+        table.on('tool(table)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var Event = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            if (Event == 'del') {
+                layer.confirm('一旦删除无法恢复，真的确认这么做吗？', function(index) {
+                    layui.$.ajax({
+                        url: '/api/v1/order/delete',
+                        method: 'post',
+                        data: data,
+                        success: function(res){     
+                            if(res.code='0'){     
+                                obj.del();  
+                                layer.msg('删除成功');
+                            } else {
+                                layer.alert('发生了某些错误');
+                            }
+                        },                           
+                        error: function(data) {
+                            layer.alert('发生了某些错误');   
+                        }             
+                    })
+                    layer.close(index);
+                });
+            } else if (Event == 'setGoodsNum') {
+                var info = obj.data;
+                layer.prompt({
+                    formType: 3
+                    ,title: '修改数量为'
+                    ,value: info.num
+                }, function(value, index){
+                    layer.confirm('是否修改商品数量', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(){
+                        obj.update({
+                            num: value
+                        });
+                        info.num = Number(value)
+                        layui.$.ajax({
+                            url: '/api/v1/order/update',
+                            method: 'post',
+                            data: info,
+                            success: function(res){     
+                                if(res.code='0'){     
+                                    layer.msg('修改成功');
+                                } else {
+                                    layer.alert('发生了某些错误');
+                                }
+                            },                           
+                            error: function(data) {
+                                console.log(info)
+                                layer.alert('发生了某些错误');   
+                            }             
+                        })
+                        layer.close(index);
+                    });
+                });
+            } else if (Event == 'done') {
+                data.done = 2
+                layer.confirm('是否处理订单', function(index) {
+                    layui.$.ajax({
+                        url: '/api/v1/order/update',
+                        method: 'post',
+                        data: data,
+                        success: function(res){     
+                            if(res.code='0'){     
+                                data.done = 2;
+                                layer.msg('处理成功');
+                            } else {
+                                layer.alert('发生了某些错误');
+                            }
+                        },                           
+                        error: function(data) {
+                            layer.alert('发生了某些错误');   
+                        }             
+                    })
+                    layer.close(index);
+                });
+            }
+        });
+        table.on('toolbar(table)', function(obj) {
+            var data = obj.data;
+            var Event = obj.event;
+            switch (Event) {
+                case 'newOrder':
+                    layer.open({
+                        type: 2,
+                        title: '添加订单',
+                        shadeClose: true,
+                        shade: 0.8,
+                        area: ['1200px', '90%'],
+                        content: '/main/newOrder' //iframe的url
+                    });
+            }
+        })
+        layui.$('.search .layui-btn').on('click', function(){
+            table.reload('tableData', {
+                url: '/api/v1/order/find',
+                where: {
+                    "name": layui.$('#searchData').val()
+                }
+            });
+        });     
+    </script>
+</body>

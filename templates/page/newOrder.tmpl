@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/static/css/layui.css">
+
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品名称: </label>
+        <div class="layui-input-inline">
+            <input type="text" name="name" required lay-verify="required" placeholder="请输入商品名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">职工性别: </label>
+        <div class="layui-input-block">
+            <select name="type">
+                <option value=""></option>
+                <option value="1">入库订单</option>
+                <option value="2">出库订单</option>
+                <option value="3">退货订单</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品数量: </label>
+        <div class="layui-input-block">
+            <input type="text" name="num" placeholder="请输入商品数量" autocomplete="off" class="layui-input" required>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">商品价格: </label>
+        <div class="layui-input-block">
+            <input type="text" name="price" placeholder="请输入商品价格" autocomplete="off" class="layui-input" required>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="/static/layui.all.js"></script>
+<script>
+    var form = layui.form;
+    var $ = layui.$
+    form.on('submit(formSubmit)', function(data){
+        var now = new Date()
+        var year = now.getFullYear()
+        var month = now.getMonth() + 1
+        var date = now.getDate()
+        data.field['date'] = year + '-' + month + '-' + date
+        data.field['done'] = 1
+        console.log(data.field)
+        $.ajax({
+            url: '/api/v1/order/add',
+            method: 'post',
+            data: data.field,
+            success: function(res){     
+                if(res.code='0'){       
+                   layer.msg('提交成功');
+                } else {
+                    layer.alert('发生了某些错误');
+                }
+            },                           
+            error: function(data) {
+                layer.alert('发生了某些错误');   
+            }             
+        })
+        return false
+    });
+</script>

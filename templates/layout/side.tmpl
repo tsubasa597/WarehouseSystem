@@ -1,0 +1,20 @@
+{{{ define "side" }}}
+<div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+        <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        {{{ range $menu := .menus }}}
+            <div>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" > {{{ $menu.Name }}} </a>
+                    {{{ range $child := $menu.Children }}}
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" class="layTabPlus" tab_url={{{ $child.Url }}}> {{{ $child.Name }}} </a></dd>
+                    </dl>
+                    {{{ end }}}
+                </li>
+            </div>
+        {{{ end }}}
+        </ul>
+    </div>
+</div>
+{{{ end }}}

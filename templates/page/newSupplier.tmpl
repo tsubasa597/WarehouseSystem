@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="/static/css/layui.css">
+
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">供货商名称: </label>
+        <div class="layui-input-inline">
+            <input type="text" name="name" required lay-verify="required" placeholder="请输入供货商名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">供货商电话: </label>
+        <div class="layui-input-block">
+            <input type="text" name="phone" lay-verify="phone" placeholder="请输入供货商电话" autocomplete="off" class="layui-input" required>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="/static/layui.all.js"></script>
+<script>
+    var form = layui.form;
+    var $ = layui.$
+    form.on('submit(formSubmit)', function(data){
+        $.ajax({
+            url: '/api/v1/supplier/add',
+            method: 'post',
+            data: data.field,
+            success: function(res){     
+                if(res.code='0'){       
+                   layer.msg('添加成功');
+                }
+            },                           
+            error: function(data) {
+                layer.alert('发生了某些错误');   
+            }             
+        })
+        return false
+    });
+        
+</script>
