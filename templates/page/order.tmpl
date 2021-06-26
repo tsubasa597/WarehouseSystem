@@ -51,13 +51,15 @@
         var table = layui.table;
         table.render({
             elem: '#tableData'
-            ,url: '/api/v1/order/' //数据接口
+            ,url: '/api/v1/order' //数据接口
             ,toolbar: '#dataTools'
             ,defaultToolbar: []
             ,cols: [ [ //表头
             {field: 'id', align:'center', title: '商品 ID'}
-            ,{field: 'name', align:'center', title: '商品名称'}
-            ,{field: 'num', align:'center', event: 'setGoodsNum', title: '商品数量'}
+            ,{field: 'date', align:'center', title: '日期'}
+            ,{field: 'price', align:'center', title: '总价格'}
+            ,{field: 'user_name', align:'center', title: '处理人名称'}
+            ,{field: 'customer_name', align:'center', title: '客户名称'}
             ,{field: 'done', templet: '#OrderTpl', align:'center', title: '是否处理'}
             ,{field: 'type', templet: '#OrderTypeTpl', align:'center', title: '订单类型'},
             {fixed: 'right', title: '操作', align:'center', toolbar: '#tableTools'}
@@ -75,7 +77,7 @@
                         method: 'post',
                         data: data,
                         success: function(res){     
-                            if(res.code='0'){     
+                            if(res.code=0){     
                                 obj.del();  
                                 layer.msg('删除成功');
                             } else {
@@ -88,39 +90,6 @@
                     })
                     layer.close(index);
                 });
-            } else if (Event == 'setGoodsNum') {
-                var info = obj.data;
-                layer.prompt({
-                    formType: 3
-                    ,title: '修改数量为'
-                    ,value: info.num
-                }, function(value, index){
-                    layer.confirm('是否修改商品数量', {
-                        btn: ['确定','取消'] //按钮
-                    }, function(){
-                        obj.update({
-                            num: value
-                        });
-                        info.num = Number(value)
-                        layui.$.ajax({
-                            url: '/api/v1/order/update',
-                            method: 'post',
-                            data: info,
-                            success: function(res){     
-                                if(res.code='0'){     
-                                    layer.msg('修改成功');
-                                } else {
-                                    layer.alert('发生了某些错误');
-                                }
-                            },                           
-                            error: function(data) {
-                                console.log(info)
-                                layer.alert('发生了某些错误');   
-                            }             
-                        })
-                        layer.close(index);
-                    });
-                });
             } else if (Event == 'done') {
                 data.done = 2
                 layer.confirm('是否处理订单', function(index) {
@@ -129,7 +98,7 @@
                         method: 'post',
                         data: data,
                         success: function(res){     
-                            if(res.code='0'){     
+                            if(res.code=0){     
                                 data.done = 2;
                                 layer.msg('处理成功');
                             } else {

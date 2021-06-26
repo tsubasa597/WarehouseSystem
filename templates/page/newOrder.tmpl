@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">职工性别: </label>
+        <label class="layui-form-label">订单类型: </label>
         <div class="layui-input-block">
             <select name="type">
                 <option value=""></option>
@@ -56,7 +56,7 @@
             method: 'post',
             data: data.field,
             success: function(res){     
-                if(res.code='0'){       
+                if(res.code=0){       
                    layer.msg('提交成功');
                 } else {
                     layer.alert('发生了某些错误');

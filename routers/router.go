@@ -51,6 +51,7 @@ func APIRoute(group *gin.RouterGroup) {
 	group.POST("/order/delete", v1.DeleteOrder)
 	group.POST("/order/update", v1.EditOrder)
 	group.GET("/order/find", v1.FindOrder)
+	group.GET("/order/details", v1.GetOrderDetails)
 
 	group.GET("/goods", v1.GetGoods)
 	group.POST("/goods/add", v1.AddGoods)
@@ -112,6 +113,10 @@ func OpenDB() {
 		}
 		if !models.HasTable(entry.Supplier{}) {
 			models.Migrate(entry.Supplier{})
+		}
+
+		if !models.HasTable(entry.OrderDetails{}) {
+			models.Migrate(entry.OrderDetails{})
 		}
 
 	}

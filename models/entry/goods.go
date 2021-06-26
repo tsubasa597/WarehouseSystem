@@ -6,11 +6,11 @@ import (
 )
 
 type Goods struct {
-	ID       int    `json:"id" form:"id" binding:"min=0" gorm:"primaryKey;column:goods_id;autoIncrement"`
-	Name     string `json:"name" form:"name" binding:"required" gorm:"column:goods_name"`
-	Num      int    `json:"num" form:"num" binding:"required,min=0" gorm:"column:goods_num"`
-	Price    int    `json:"price" form:"price" binding:"required,min=0" gorm:"column:goods_price"`
-	Supplier string `json:"supplier" form:"supplier" gorm:"column:goods_supplier"`
+	ID         int    `json:"id" form:"id" binding:"min=0" gorm:"primaryKey;column:goods_id;autoIncrement"`
+	Name       string `json:"name" form:"name" binding:"required" gorm:"column:goods_name"`
+	Num        int    `json:"num" form:"num" binding:"required,min=0" gorm:"column:goods_num"`
+	Price      int    `json:"price" form:"price" binding:"required,min=0" gorm:"column:goods_price"`
+	SupplierID int    `json:"supplier" form:"supplier" gorm:"column:goods_supplier"`
 }
 
 var _ models.Modeler = (*Goods)(nil)

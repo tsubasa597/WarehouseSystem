@@ -8,14 +8,13 @@ import (
 )
 
 type Order struct {
-	ID    int    `json:"id" form:"id" binding:"min=0" gorm:"primaryKey;column:order_id;autoIncrement"`
-	Name  string `json:"name" form:"name" binding:"required" gorm:"column:goods_name"`
-	Num   int    `json:"num" form:"num" binding:"min=0" gorm:"column:goods_num"`
-	Date  string `json:"date" form:"date" binding:"required" gorm:"column:order_date"`
-	Type  int    `json:"type" form:"type" binding:"required,min=1,max=3" gorm:"column:order_type"`
-	User  string `json:"user" form:"user" gorm:"column:order_user"`
-	Price int    `json:"price" form:"price" binding:"required,min=0" gorm:"column:order_price"`
-	Done  int    `json:"done" form:"done"  binding:"required" gorm:"column:order_done"`
+	ID         int    `json:"id" form:"id" binding:"min=0" gorm:"primaryKey;column:order_id;autoIncrement"`
+	Type       int    `json:"type" form:"type" binding:"required,min=1,max=3" gorm:"column:order_type"`
+	Date       string `json:"date" form:"date" binding:"required" gorm:"column:order_date"`
+	Price      int    `json:"price" form:"price" binding:"required,min=0" gorm:"column:order_price"`
+	Done       int    `json:"done" form:"done" binding:"required" gorm:"column:order_done"`
+	UserID     int    `json:"user_id" form:"user_id" binding:"required" gorm:"column:user_id"`
+	CustomerID int    `json:"customer_id" form:"customer_id" binding:"required" gorm:"column:customer_id"`
 }
 
 var _ models.Modeler = (*Order)(nil)
@@ -52,4 +51,21 @@ func (Order) GetModels() interface{} {
 
 func (Order) TableName() string {
 	return "db_orders"
+}
+
+func TransformOrder(o *[]Order) (res []view.Order) {
+	for _, v := range *(o) {
+		user, _ := models.GetOne(&User{ID: v.UserID})
+		customer, _ := models.GetOne(&Customer{ID: v.CustomerID})
+		res = append(res, view.Order{
+			ID:           v.ID,
+			Type:         v.Type,
+			Date:         v.Date,
+			Price:        v.Price,
+			Done:         v.Done,
+			UserName:     user.(*User).Name,
+			CustomerName: customer.(*Customer).Name,
+		})
+	}
+	return
 }

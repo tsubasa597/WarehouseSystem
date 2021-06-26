@@ -87,11 +87,10 @@ func Find(model Modeler, pageSize, pageNum int) (res interface{}, err error) {
 }
 
 func GetOne(model tabler) (res interface{}, err error) {
-	res = model.GetModels()
-	if db.Scopes(tableName(model)).Where(model).Find(res).RowsAffected == 0 {
+	if db.Scopes(tableName(model)).Where(model).Find(model).RowsAffected == 0 {
 		return nil, fmt.Errorf("不存在")
 	}
-	return res, db.Error
+	return model, db.Error
 }
 
 func Insert(model Modeler) error {

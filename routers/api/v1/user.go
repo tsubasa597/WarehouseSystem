@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/tsubasa597/WarehouseSystem/middleware/auth"
@@ -12,8 +11,7 @@ import (
 
 func GetUser(ctx *gin.Context) {
 	token, _ := auth.GetToken(ctx)
-	fmt.Println(int(token["info"].(map[string]interface{})["type"].(float64)) < 2, int(token["info"].(map[string]interface{})["type"].(float64)))
-	if int(token["info"].(map[string]interface{})["type"].(float64)) < 2 {
+	if token["info"].(map[string]interface{})["type"].(float64) < 2 {
 		ctx.JSON(http.StatusOK, gin.H{})
 		return
 	}

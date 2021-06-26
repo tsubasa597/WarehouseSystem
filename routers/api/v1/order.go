@@ -1,14 +1,34 @@
 package v1
 
 import (
+	"net/http"
+
+	"github.com/tsubasa597/WarehouseSystem/conf"
 	"github.com/tsubasa597/WarehouseSystem/models/entry"
+	"github.com/tsubasa597/WarehouseSystem/models/view"
+	"github.com/tsubasa597/WarehouseSystem/msg"
 
 	"github.com/gin-gonic/gin"
 )
 
 // GetOrder 按 type 获取订单数据
 func GetOrder(ctx *gin.Context) {
-	GetV1(entry.Order{}, ctx)
+	var (
+		page  view.Page
+		order entry.Order
+	)
+	page.PageNum = 1
+	page.Limit = conf.PageSize
+	if err := ctx.ShouldBind(&page); err == nil && page.PageNum >= 0 {
+		if models, err := order.Get(page); err == nil {
+			resp := msg.GetMsg(msg.SUCCESS)
+			resp.Data = entry.TransformOrder(models.(*[]entry.Order))
+
+			ctx.JSON(http.StatusOK, resp)
+			return
+		}
+	}
+	ctx.JSON(http.StatusOK, msg.GetMsg(msg.ERROR))
 }
 
 // AddOrder 添加订单
@@ -31,6 +51,5 @@ func EditOrder(ctx *gin.Context) {
 
 func FindOrder(ctx *gin.Context) {
 	var order entry.Order
-	order.Name = ctx.Query("name")
 	FindV1(&order, ctx)
 }
