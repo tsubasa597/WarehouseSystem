@@ -51,8 +51,8 @@
                     url: '/login',
                     method: 'post',
                     data: data.field,
-                    success: function(res){     
-                        if(res.code=0){       
+                    success: function(res){
+                        if(res.code=200){       
                             layer.msg('登录成功');
                             window.location.href = '../index'
                         }

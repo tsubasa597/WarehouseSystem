@@ -8,11 +8,11 @@ import (
 )
 
 type Order struct {
-	ID         int    `json:"id" form:"id" binding:"min=0" gorm:"primaryKey;column:order_id;autoIncrement"`
-	Type       int    `json:"type" form:"type" binding:"required,min=1,max=3" gorm:"column:order_type"`
-	Date       string `json:"date" form:"date" binding:"required" gorm:"column:order_date"`
-	Price      int    `json:"price" form:"price" binding:"required,min=0" gorm:"column:order_price"`
-	Done       int    `json:"done" form:"done" binding:"required" gorm:"column:order_done"`
+	ID         int    `json:"id" form:"id" binding:"min=0" gorm:"primaryKey;column:id;autoIncrement"`
+	Type       int    `json:"type" form:"type" binding:"required,min=1,max=3" gorm:"column:type"`
+	Date       string `json:"date" form:"date" binding:"required" gorm:"column:date"`
+	Price      int    `json:"price" form:"price" binding:"required,min=0" gorm:"column:price"`
+	Done       int    `json:"done" form:"done" binding:"required" gorm:"column:done"`
 	UserID     int    `json:"user_id" form:"user_id" binding:"required" gorm:"column:user_id"`
 	CustomerID int    `json:"customer_id" form:"customer_id" binding:"required" gorm:"column:customer_id"`
 }

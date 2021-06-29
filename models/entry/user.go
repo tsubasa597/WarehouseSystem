@@ -10,13 +10,13 @@ import (
 )
 
 type User struct {
-	ID    int    `json:"id" form:"id" binding:"min=0" gorm:"primaryKey;column:user_id;autoIncrement"`
-	Age   int    `json:"age" form:"age" binding:"required,min=0" gorm:"column:user_age"`
-	Sex   int    `json:"sex" form:"sex" binding:"required" gorm:"column:user_sex"`
-	Phone string `json:"phone" form:"phone" binding:"min=11" gorm:"column:user_phone"`
-	Type  int    `json:"type" form:"type" binding:"required,min=0,max=2" gorm:"column:user_type"`
-	Name  string `json:"name" form:"name" binding:"required" gorm:"column:user_name"`
-	Pwd   string `json:"-" form:"pwd" gorm:"column:user_pwd"`
+	ID    int    `json:"id" form:"id" binding:"min=0" gorm:"primaryKey;column:id;autoIncrement"`
+	Age   int    `json:"age" form:"age" binding:"required,min=0" gorm:"column:age"`
+	Sex   int    `json:"sex" form:"sex" binding:"required" gorm:"column:sex"`
+	Phone string `json:"phone" form:"phone" binding:"min=11" gorm:"column:phone"`
+	Type  int    `json:"type" form:"type" binding:"required,min=0,max=2" gorm:"column:type"`
+	Name  string `json:"name" form:"name" binding:"required" gorm:"column:name"`
+	Pwd   string `json:"-" form:"pwd" gorm:"column:pwd"`
 }
 
 var _ models.Modeler = (*User)(nil)

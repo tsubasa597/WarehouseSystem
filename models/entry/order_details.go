@@ -8,7 +8,7 @@ import (
 type OrderDetails struct {
 	OroderID int `json:"order_id" gorm:"column:order_id"`
 	GoodsID  int `json:"goods_id" binding:"required" gorm:"column:goods_id"`
-	Num      int `json:"num" form:"num" binding:"min=0" gorm:"column:goods_num"`
+	Num      int `json:"num" form:"num" binding:"min=0" gorm:"column:num"`
 }
 
 var _ models.Modeler = (*OrderDetails)(nil)

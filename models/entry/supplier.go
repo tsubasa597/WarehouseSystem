@@ -6,9 +6,10 @@ import (
 )
 
 type Supplier struct {
-	ID    int    `json:"id" form:"id" binding:"min=0" gorm:"primaryKey;column:supplier_id;autoIncrement"`
-	Name  string `json:"name" form:"name" binding:"required" gorm:"column:supplier_name"`
-	Phone string `json:"phone" form:"phone" binding:"min=11" gorm:"column:supplier_phone"`
+	ID    int    `json:"id" form:"id" binding:"min=0" gorm:"primaryKey;column:id;autoIncrement"`
+	Name  string `json:"name" form:"name" binding:"required" gorm:"column:name"`
+	Phone string `json:"phone" form:"phone" binding:"min=11" gorm:"column:phone"`
+	Space string `json:"space" form:"space" gorm:"column:space"`
 }
 
 var _ models.Modeler = (*Supplier)(nil)

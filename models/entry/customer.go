@@ -6,9 +6,10 @@ import (
 )
 
 type Customer struct {
-	ID    int    `json:"id" form:"id" binding:"min=0" gorm:"primaryKey;column:customer_id"`
-	Name  string `json:"name" form:"name" binding:"required" gorm:"column:customer_name"`
-	Phone string `json:"phone" form:"phone" binding:"required,min=11" gorm:"column:customer_phone"`
+	ID    int    `json:"id" form:"id" binding:"min=0" gorm:"primaryKey;column:id"`
+	Name  string `json:"name" form:"name" binding:"required" gorm:"column:name"`
+	Phone string `json:"phone" form:"phone" binding:"required,min=11" gorm:"column:phone"`
+	Space string `json:"space" form:"space" gorm:"column:space"`
 }
 
 var _ models.Modeler = (*Customer)(nil)
